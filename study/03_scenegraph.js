@@ -1,5 +1,7 @@
 import * as THREE from "../build/three.module.js";
 
+// 03scenegraph
+
 class App {
 	constructor() {
 		const divContainer = document.querySelector("#webgl-container");

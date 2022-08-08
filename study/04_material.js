@@ -29,7 +29,7 @@ class App {
 		const width = this._divContainer.clientWidth;
 		const height = this._divContainer.clientHeight;
 		const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 100);
-		camera.position.z = 10;
+		camera.position.z = 3;
 		this._camera = camera;
 	}
 	_setupLight() {
@@ -40,34 +40,27 @@ class App {
 		this._scene.add(light);
 	}
 	_setupModel() {
-		const vertices = [];
-		for (let i = 0; i < 10000; i++) {
-			const x = THREE.MathUtils.randFloatSpread(5);
-			const y = THREE.MathUtils.randFloatSpread(5);
-			const z = THREE.MathUtils.randFloatSpread(5);
-			vertices.push(x, y, z);
-		}
-
-		const geometry = new THREE.BufferGeometry();
-		geometry.setAttribute(
-			"position",
-			new THREE.Float32BufferAttribute(vertices, 3)
-		);
-
-		const sprite = new THREE.TextureLoader().load(
-			"../examples/textures/sprites/ball.png"
-		);
-
-		const material = new THREE.PointsMaterial({
-			map: sprite,
-			alphaTest: 0.5,
-			color: "yellow",
-			size: 0.1,
-			sizeAttenuation: true,
+		const material = new THREE.MeshPhysicalMaterial({
+			color: 0xff0000,
+			emissive: 0x000000,
+			roughness: 1,
+			metalness: 0,
+			clearcoat: 1,
+			clearcoatRoughness: 0,
+			wireframe: false,
+			flatShading: false,
 		});
 
-		const points = new THREE.Points(geometry, material);
-		this._scene.add(points);
+		const box = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), material);
+		box.position.set(-1, 0, 0);
+		this._scene.add(box);
+
+		const sphere = new THREE.Mesh(
+			new THREE.SphereGeometry(0.7, 32, 32),
+			material
+		);
+		sphere.position.set(1, 0, 0);
+		this._scene.add(sphere);
 	}
 	_setupControls() {
 		new OrbitControls(this._camera, this._divContainer);

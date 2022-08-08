@@ -52,9 +52,15 @@ class App {
 			heightSegments
 		);
 
-		const sunMaterial = new THREE.MeshPhongMaterial({
-			emissive: 0xffff00,
-			flatShading: true,
+		const sunMaterial = new THREE.MeshPhysicalMaterial({
+			color: 0xff0000,
+			emissive: 0x000000,
+			roughness: 1,
+			metalness: 0,
+			clearcoat: 1,
+			clearcoatRoughness: 0,
+			wireframe: false,
+			flatShading: false,
 		});
 
 		const sunMesh = new THREE.Mesh(sphereGeometry, sunMaterial);
